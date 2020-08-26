@@ -1,13 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+
 import { StyleSheet, Text, View } from 'react-native';
+import {
+  CopilotView,
+  isActive,
+  init,
+  setupEventListeners, configureLogin,
+} from './Copilot'
+
+const companyId = 'AMS COMPANY ID'
+const username = 'AMS USERNAME'
 
 export default function App() {
+  const [isInitialised, setInitialised] = useState(false)
+
+  const initialiseCopilot = async () => {
+    const isInitialised = await isActive()
+    if (!isInitialised) {
+      init()
+      return
+    }
+    setInitialised(true)
+  }
+
+  useEffect(() => {
+    let listeners
+    ;(async () => {
+      listeners = setupEventListeners({ setInitialised })
+      // Setting AMS credentials needs to happen prior to Copilot
+      // initialisation to bypass the license entry screen.
+      await configureLogin(username, companyId)
+      await initialiseCopilot()
+    })()
+    return () => {
+      Object.values(listeners).forEach(
+        listener => listener && listener.remove(),
+      )
+    }
+  }, [])
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {!isInitialised ? (
+        <View style={styles.container}>
+          <Text>Waiting for Copilot to initialise...</Text>
+        </View>
+      ) : (
+        <CopilotView style={{ flex: 1 }} />
+      )}
+    </>
   );
 }
 
