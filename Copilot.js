@@ -21,6 +21,7 @@ const {
 } = NativeModules
 
 export const init = () => CopilotStartupMgr.bindCoPilotService()
+export const destroy = () => CopilotStartupMgr.unbindCopilotService()
 
 export const isActive = () => CopilotMgr.isActive()
 

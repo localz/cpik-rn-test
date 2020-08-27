@@ -5,7 +5,9 @@ import {
   CopilotView,
   isActive,
   init,
-  setupEventListeners, configureLogin,
+  setupEventListeners,
+  configureLogin,
+  destroy,
 } from './Copilot'
 
 const companyId = 'AMS COMPANY ID'
@@ -36,6 +38,7 @@ export default function App() {
       Object.values(listeners).forEach(
         listener => listener && listener.remove(),
       )
+      destroy()
     }
   }, [])
 
