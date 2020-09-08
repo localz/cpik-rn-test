@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, BackHandler } from 'react-native';
 import {
   CopilotView,
   isActive,
@@ -42,6 +42,15 @@ export default function App() {
     }
   }, [])
 
+  const goBack = () => {
+    console.log('This is swallowed by CopilotView.')
+    return true
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', goBack)
+    return () => BackHandler.removeEventListener('hardwareBackPress', goBack)
+  }, [goBack])
 
   return (
     <>
