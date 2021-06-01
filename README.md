@@ -9,7 +9,7 @@ yarn
 
 ## Configure Android SDK Directory
 Add `cpik-rn-test/android/local.properties` or follow these instructions:
-https://developer.copilotpro.com/cpik-react-native/android-guide/#43-configure-the-android_home-environment-variable.
+https://developer.trimblemaps.com/copilot-navigation/v10-19/sdk-libraries/react-native/platform-setup-guide/android-guide/#43-configure-the-android_home-environment-variable.
 
 ## Configure AMS Credentials
 Replace these values with your company's AMS credentials.
